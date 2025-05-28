@@ -4,6 +4,7 @@
 #include <list>
 #include <mutex>
 #include <unordered_set>
+#include <unordered_map>
 #include <vector>
 
 #include "buffer/replacer.h"
@@ -36,7 +37,10 @@ class LRUReplacer : public Replacer {
   size_t Size() override;
 
 private:
-  // add your own private member variables here
+  mutable mutex latch_;  // 用于线程安全
+  list<frame_id_t> lru_list_;  // 按访问时间排序的链表，最近访问的在前面
+  unordered_map<frame_id_t, list<frame_id_t>::iterator> lru_map_;  // 快速查找帧在链表中的位置
+  size_t max_size_;  // 最大容量
 };
 
 #endif  // MINISQL_LRU_REPLACER_H
