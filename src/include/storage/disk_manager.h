@@ -92,6 +92,8 @@ class DiskManager {
    */
   page_id_t MapPageId(page_id_t logical_page_id);
 
+  static constexpr size_t MAX_SECTIONS = 998;
+
  private:
   // stream to write db file
   std::fstream db_io_;

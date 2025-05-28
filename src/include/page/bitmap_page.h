@@ -14,6 +14,8 @@ class BitmapPage {
    */
   static constexpr size_t GetMaxSupportedSize() { return 8 * MAX_CHARS; }
 
+  static constexpr size_t MAX_PAGES = 8 * (PageSize - 2 * sizeof(uint32_t));
+
   /**
    * @param page_offset Index in extent of the page allocated.
    * @return true if successfully allocate a page.
@@ -45,9 +47,9 @@ class BitmapPage {
 
  private:
   /** The space occupied by all members of the class should be equal to the PageSize */
-  [[maybe_unused]] uint32_t page_allocated_;
-  [[maybe_unused]] uint32_t next_free_page_;
-  [[maybe_unused]] unsigned char bytes[MAX_CHARS];
+  [[maybe_unused]] uint32_t page_allocated_ = 0;
+  [[maybe_unused]] uint32_t next_free_page_ = 0;
+  [[maybe_unused]] unsigned char bytes[MAX_CHARS] = {};
 };
 
 #endif  // MINISQL_BITMAP_PAGE_H
